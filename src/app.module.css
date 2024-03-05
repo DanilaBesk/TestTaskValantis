@@ -1,0 +1,38 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  margin: 0 auto;
+  padding: 12px;
+  max-width: 1800px;
+  min-height: 100vh;
+  background-color: rgb(242, 242, 242);
+}
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  row-gap: 14px;
+}
+.main {
+  margin-top: 24px;
+  flex-grow: 1;
+}
+
+@media (min-width: 510px) {
+  .app {
+    padding: 16px 20px;
+  }
+}
+@media (min-width: 800px) {
+  .app {
+    padding: 20px 30px;
+  }
+}
