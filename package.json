@@ -1,5 +1,6 @@
 {
   "name": "test-valantis-pagination-filter",
+  "homepage": "https://DanilaBesk.github.io/TestTaskValantis",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,13 +23,16 @@
   "devDependencies": {
     "@types/md5": "^2.3.5",
     "@types/uuid": "^9.0.8",
+    "gh-pages": "^6.1.1",
     "react-scripts": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
