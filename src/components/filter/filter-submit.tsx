@@ -7,7 +7,7 @@ export const FilterSubmit = () => {
       type="submit"
       className={`${styles.buttonSearch} ${styles.formElement}`}
     >
-      <Search />
+      <Search color="black" />
     </button>
   );
 };

@@ -24,6 +24,7 @@
 .formElement {
   border-radius: 4px;
   font-size: 1rem;
+  color: black;
   border: 1px solid #ccc;
   height: 36px;
   padding: 4px 8px;
