@@ -1,4 +1,4 @@
-import { api } from "../..";
+import { api } from "../../instance";
 import { TRequest, TResponse } from "./types";
 
 interface TInput {

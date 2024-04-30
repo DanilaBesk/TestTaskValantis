@@ -1,5 +1,4 @@
-import { api } from "../..";
-import { TFields } from "../../../types/product";
+import { api } from "../../instance";
 import { TRequest, TResponse } from "./types";
 
 interface TInput {

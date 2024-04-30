@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ProductList } from "./components/product/product-list";
 import { Pagination } from "./components/pagination/pagination";
 import { Filter } from "./components/filter/filter";
 import { Loader } from "./components/loader/loader";
 import styles from "./app.module.css";
-import { TFields, TProduct } from "./types/product";
+import { TFields } from "./types/product";
 import { getIds } from "./api/products/get-ids";
 import { getItems } from "./api/products/get-items";
 import { ApiError } from "./lib/errors/api-error";
 import { LIMIT_ITEMS_PER_PAGE } from "./lib/constants/pagination-settings";
 import { filter } from "./api/products/filter";
 
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const App = () => {
   const [page, setPage] = useState(1);
@@ -20,8 +20,6 @@ export const App = () => {
     filterValue: TFields | "none";
     inputValue: string;
   }>({ filterValue: "none", inputValue: "" });
-
-  const queryClient = useQueryClient();
 
   const handleError = (error: unknown) => {
     if (error instanceof Error) {

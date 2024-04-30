@@ -1,5 +1,5 @@
-import { api } from "../..";
 import { removeDuplicateFields } from "../../../lib/remove-dublicates";
+import { api } from "../../instance";
 import { TRequest, TResponse } from "./types";
 
 interface TInput {

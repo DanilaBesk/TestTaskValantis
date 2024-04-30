@@ -43,6 +43,7 @@ export const Pagination = ({
           );
         else if (item.type === "ellipsis")
           return <PaginationEllipsis key={uuid()} />;
+        return <></>;
       })}
 
       <PaginationNext
