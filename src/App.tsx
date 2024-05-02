@@ -1,25 +1,25 @@
 import { useState } from "react";
-import { ProductList } from "./components/product/product-list";
-import { Pagination } from "./components/pagination/pagination";
-import { Filter } from "./components/filter/filter";
-import { Loader } from "./components/loader/loader";
-import styles from "./app.module.css";
-import { TFields } from "./types/product";
-import { getIds } from "./api/products/get-ids";
-import { getItems } from "./api/products/get-items";
-import { ApiError } from "./lib/errors/api-error";
+import { filter, getIds, getItems } from "./api/products";
+import { Filter } from "./components/filter";
+import { Loader } from "./components/loader";
+import { Pagination } from "./components/pagination";
+import { ProductList } from "./components/product";
 import { LIMIT_ITEMS_PER_PAGE } from "./lib/constants/pagination-settings";
-import { filter } from "./api/products/filter";
+import { ApiError } from "./lib/errors";
+import { TFields } from "./types/product";
 
 import { useQuery } from "@tanstack/react-query";
+
+import styles from "./app.module.css";
+import { getCorrectInputValueType } from "lib/get-correct-input-value-type";
 
 export const App = () => {
   const [page, setPage] = useState(1);
 
   const [{ filterValue, inputValue }, setSearchParams] = useState<{
-    filterValue: TFields | "none";
+    filterValue: TFields | null;
     inputValue: string;
-  }>({ filterValue: "none", inputValue: "" });
+  }>({ filterValue: null, inputValue: "" });
 
   const handleError = (error: unknown) => {
     if (error instanceof Error) {
@@ -39,7 +39,7 @@ export const App = () => {
   const { data: ids, isLoading: isIdsLoading } = useQuery({
     queryKey: ["ids", filterValue, inputValue],
     queryFn: async ({ signal }) => {
-      if (filterValue === "none") {
+      if (!filterValue) {
         try {
           const response = await getIds({ signal });
           return response.result;
@@ -47,17 +47,12 @@ export const App = () => {
           handleError(error);
         }
       } else {
-        let value: string | number | null = inputValue;
-        if (filterValue === "price") {
-          value = parseInt(inputValue);
-        } else if (filterValue === "brand" && inputValue === "") {
-          value = null;
-        }
-
         try {
           const response = await filter({
             signal,
-            params: { [filterValue]: value },
+            params: {
+              [filterValue]: getCorrectInputValueType(filterValue, inputValue),
+            },
           });
 
           return response.result;
@@ -85,6 +80,10 @@ export const App = () => {
             ids: ids.slice(offset, LIMIT_ITEMS_PER_PAGE + offset),
           },
           signal,
+          filter: {
+            key: filterValue,
+            value: getCorrectInputValueType(filterValue, inputValue),
+          },
         });
         return response.result;
       } catch (error) {

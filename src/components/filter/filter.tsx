@@ -8,13 +8,13 @@ import styles from "./filter.module.css";
 
 interface FilterProps {
   setSearchParams: (params: {
-    filterValue: TFields | "none";
+    filterValue: TFields | null;
     inputValue: string;
   }) => void;
 }
 
 export const Filter = ({ setSearchParams }: FilterProps) => {
-  const [filterValue, setFilterValue] = useState<TFields | "none">("none");
+  const [filterValue, setFilterValue] = useState<TFields | null>(null);
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,9 +27,11 @@ export const Filter = ({ setSearchParams }: FilterProps) => {
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (
-      ["brand", "price", "product", "none"].includes(e.target.value as TFields)
+      ["brand", "price", "product", "null"].includes(e.target.value as TFields)
     )
-      setFilterValue(e.target.value as TFields);
+      setFilterValue(
+        e.target.value === "null" ? null : (e.target.value as TFields)
+      );
     setInputValue("");
   };
 
@@ -48,7 +50,7 @@ export const Filter = ({ setSearchParams }: FilterProps) => {
           <FilterLabel htmlFor="filter-input">Ввод:</FilterLabel>
           <FilterInput
             id="filter-input"
-            inputValue={filterValue === "none" ? "" : inputValue}
+            inputValue={inputValue}
             onChange={handleInputChange}
             filterValue={filterValue}
           />

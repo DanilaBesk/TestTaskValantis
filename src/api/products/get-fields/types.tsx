@@ -6,6 +6,11 @@ export type TRequest = {
   limit?: number;
 };
 
-export type TResponse = {
-  result: (string | number | null)[];
+type f = {
+  brand: string | null;
+  product: string;
+  price: number;
+};
+export type TResponse<T extends TFields> = {
+  result: f[T][];
 };
